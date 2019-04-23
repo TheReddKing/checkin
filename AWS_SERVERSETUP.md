@@ -1,5 +1,11 @@
+# Setting up AWS EC2
 
-# Setting up database
+## Additional Requirements
+
+* nginx
+* supervisor
+
+## Steps
 
 0) install python dependencies `pip install -r requirements.txt`
 1) install postgres
@@ -15,39 +21,30 @@
 `alter user checkin with encrypted password '<password>';`
 `grant all privileges on database <dbname> to checkin ;`
 8) Clone repo
+9) Copy the `build.zip` file into the `client/` folder (or manual build it using `yarn build` in the `client/` folder)
 10) Update your `config.py` file (`SQLALCHEMY_DATABASE_URI`)
 11) Run `python manage.py db init`
 12) Run `python manage.py db migrate`
 113) Run `python manage.py db upgrade`
 
-# Setup admin user
+## Setup admin user
 
 7) Setup your admin username password combo in `start_script.py`
 8) Run `python start_script.py 0`
 
-You're all set! Now it's time to use the online interface!
-(But you can just mess around with start_script as well)
-
-# Local Testing
-
-9) Run `python runserver.py` or python3 since we require python3 to run
-10) cd into `client` and run `yarn start`
-
-
-# Setup on Amazon EC2 instance with nginx
+## Nginx
 
 This server works best with Nginx with a service to run the server backend
 Using supervisor to control service
 
-
 ### Install supervisor
-
-`sudo apt install supervisor`
-
-`sudo mkdir /var/log/checkin`
+```
+sudo apt install supervisor
+sudo mkdir /var/log/checkin
+```
 Add to `/etc/supervisord/conf.d/checkin.conf`
 ```
-[program:checkin]                                                                  
+[program:checkin]                                                                 
 command = /home/checkin/env/bin/python runserver.py PRODUCTION                                  
 directory = /home/checkin/checkin
 autostart = true                 
@@ -57,10 +54,14 @@ stderr_logfile=/var/log/checkin/checkin.err.log
 stdout_logfile=/var/log/checkin/checkin.out.log
 ```
 
-Then run `sudo supervisorctl reread`
-`sudo service supervisor restart`
+Then run
+```
+sudo supervisorctl reread
+sudo service supervisor restart
+```
 
-### For nginx
+### For nginx configuration
+In your site's VirtualHost (in `/etc/nginx/sites-available` ... Google how to use Nginx if you don't know how to)
 ```
   location /api/ {
     proxy_pass http://127.0.0.1:5000/api/;

@@ -1,3 +1,7 @@
+"""
+Runs the backend server
+"""
+
 from flask import Flask
 from app import app
 

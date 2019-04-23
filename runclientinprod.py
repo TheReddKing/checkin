@@ -1,6 +1,10 @@
-# Requires that
-# A) python runserver.py is started on port 5000
-# B) yarn build succeeded
+"""
+Allows testing for webservice worker by using the compiled production React environment
+
+Requires that:
+A) python runserver.py is started on port 5000
+B) yarn build succeeded and in client/build
+"""
 
 import http.server
 import socketserver
