@@ -17,7 +17,7 @@ Requirements:
 * python 3.6+
 
 1) first create a python env wrapper `python -m venv env`
-2) activate env wrapper `source env/source/activate`
+2) activate env wrapper `source env/bin/activate`
 3) run `pip install -r requirements.txt`
 4) rename `example.config.py` to `config.py` and adjust settings
 5) create a postgres database that matches your config file (more in SERVERSETUP.md)
