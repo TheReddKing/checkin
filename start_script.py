@@ -1,5 +1,5 @@
-from app.app import app, db
-from app.models import *
+from server.app import app, db
+from server.models import *
 import sys
 
 if(User.query.filter(User.username == app.config["ADMIN_USERNAME"]).count() == 0):

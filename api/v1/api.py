@@ -1,4 +1,4 @@
-from app.controllers.authentication import Auth, AuthClient, AuthStatus
+from server.controllers.authentication import Auth, AuthClient, AuthStatus
 from enum import Enum
 from flask import request
 from functools import wraps

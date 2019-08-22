@@ -1,5 +1,5 @@
-from app.app import db
-from app.models import *
+from server.app import db
+from server.models import *
 
 
 class Database:

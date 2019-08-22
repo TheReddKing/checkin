@@ -1,6 +1,6 @@
-from app.app import db
+from server.app import db
 import datetime
-from app.helpers.passwords import *
+from server.helpers.passwords import *
 
 
 class Client(db.Model):

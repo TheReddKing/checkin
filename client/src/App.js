@@ -57,12 +57,15 @@ class App extends Component {
   }
 
   render() {
+    document.title = process.env.REACT_APP_NAME || "";
     return (
       <Fragment>
         <HashRouter>
           <Navbar color="light" light expand="md">
             <Container>
-              <NavbarBrand>HACK Checkin! v0.1</NavbarBrand>
+              <NavbarBrand>
+                {process.env.REACT_APP_NAME || "TheReddKing"}
+              </NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav navbar>

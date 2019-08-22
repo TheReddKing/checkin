@@ -1,8 +1,9 @@
-from app.controllers.database import Database
+from server.controllers.database import Database
 from .api import APIV1, APIStatus, createStatus
 from flask_restful import Resource
 from flask import request
 import json
+
 
 class EventCreate(Resource):
     @APIV1.getClient()
@@ -15,6 +16,7 @@ class EventCreate(Resource):
                 return createStatus(APIStatus.ERROR_ACTION)
         return createStatus(APIStatus.INCORRECT_DATA)
 
+
 class EventDelete(Resource):
     @APIV1.getClient()
     def post(self, client):
@@ -25,6 +27,7 @@ class EventDelete(Resource):
             else:
                 return createStatus(APIStatus.ERROR_ACTION)
         return createStatus(APIStatus.INCORRECT_DATA)
+
 
 class EventList(Resource):
     @APIV1.getClient()

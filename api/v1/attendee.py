@@ -1,4 +1,4 @@
-from app.controllers.database import Database
+from server.controllers.database import Database
 from flask_restful import Resource
 from flask import request
 import json

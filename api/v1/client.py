@@ -1,4 +1,4 @@
-from app.controllers.authentication import Auth, AuthClient
+from server.controllers.authentication import Auth, AuthClient
 from .api import APIV1, APIStatus, createStatus
 from flask_restful import Resource
 from flask import request

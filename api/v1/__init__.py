@@ -1,6 +1,6 @@
 from api.v1 import client, attendee, user, event
 from flask_restful import Resource, Api
-from app.app import api
+from server.app import api
 
 print("IMPORTED API1")
 

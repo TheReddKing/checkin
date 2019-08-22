@@ -1,6 +1,6 @@
-from app.app import db
-from app.models import *
-from app.helpers.passwords import *
+from server.app import db
+from server.models import *
+from server.helpers.passwords import *
 from enum import Enum
 from functools import wraps
 
