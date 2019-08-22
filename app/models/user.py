@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 import datetime
 from app.helpers.passwords import *
 
@@ -10,9 +10,9 @@ eventUsers = db.Table(
         'events.id'), primary_key=True)
 )
 
+
 class User(db.Model):
     __tablename__ = 'users'
-
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -21,7 +21,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean(), default=False)
 
     events = db.relationship("Event",
-                          secondary=eventUsers,lazy='dynamic')
+                             secondary=eventUsers, lazy='dynamic')
 
     def __init__(self, username, password, name, is_admin):
         self.username = username

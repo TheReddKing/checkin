@@ -1,20 +1,9 @@
-from app import db
+from app.app import app, db
 from app.models import *
 import sys
 
-migration = int(sys.argv[1])
-
-if migration == 0:
-    # Creates Admin User
-    # [username] [password] [name] [is_admin]
-    admin = User('admin', 'password', 'Kevin Fang', True)
+if(User.query.filter(User.username == app.config["ADMIN_USERNAME"]).count() == 0):
+    admin = User(app.config["ADMIN_USERNAME"],
+                 app.config["ADMIN_PASSWORD"], 'HackMIT Admin', True)
     db.session.add(admin)
-elif migration == 1:
-    event = Event(name="Kevin's Event", time="today")
-    db.session.add(event)
-    attendee = Attendee(name="Blubity Blub", scan_value="fdsa")
-    attendee.event = event
-    db.session.add(attendee)
-elif migration == 2:
-    User.query.get(1).events.append(checkin.Event.query.get(6))
-db.session.commit()
+    db.session.commit()

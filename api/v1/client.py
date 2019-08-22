@@ -3,6 +3,7 @@ from .api import APIV1, APIStatus, createStatus
 from flask_restful import Resource
 from flask import request
 
+
 class ClientLogin(Resource):
     # First check for token then username + password
     @APIV1.getClient(shouldRet=False)
@@ -15,12 +16,13 @@ class ClientLogin(Resource):
             authClient = Auth.authenticate(username, password)
             client = authClient.client
             if client is None:
-                errorStatus = createStatus(APIStatus.ERROR_AUTH, {
-                                           'authErrorCode': authclient.authStatus
-                                           })
+                return createStatus(APIStatus.ERROR_AUTH, {
+                    'authErrorCode': str(authClient.authStatus)
+                })
 
             return createStatus(APIStatus.SUCCESS, {'token': client.token, 'name': client.user.name, 'is_admin': client.user.is_admin})
         return createStatus(APIStatus.INCORRECT_DATA)
+
     def get(self):
         return createStatus(APIStatus.NO_POST)
 

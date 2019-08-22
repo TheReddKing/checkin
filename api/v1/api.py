@@ -3,6 +3,7 @@ from enum import Enum
 from flask import request
 from functools import wraps
 
+
 class APIStatus(Enum):
     SUCCESS = 1
     ERROR_AUTH = 2
@@ -20,6 +21,7 @@ class APIStatus(Enum):
         """
         return "APIStatus." + self.mname
 
+
 def createStatus(status, otherKeys={}):
     # print(status)
     if (status is APIStatus.SUCCESS):
@@ -30,6 +32,7 @@ def createStatus(status, otherKeys={}):
             'errorCode': status.value,
             'errorCodeP': status.name
         }, **otherKeys}
+
 
 class APIV1(object):
     @staticmethod

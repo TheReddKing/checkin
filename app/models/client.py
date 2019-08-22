@@ -1,6 +1,7 @@
-from app import db
+from app.app import db
 import datetime
 from app.helpers.passwords import *
+
 
 class Client(db.Model):
     __tablename__ = 'clients'
@@ -9,7 +10,8 @@ class Client(db.Model):
     user = db.relationship("User")
 
     token = db.Column(db.String(), primary_key=True, unique=True)
-    token_expired_at = db.Column(db.DateTime, default=lambda _: (datetime.datetime.now() + datetime.timedelta(days=5)))
+    token_expired_at = db.Column(db.DateTime, default=lambda _: (
+        datetime.datetime.now() + datetime.timedelta(days=5)))
     token_created_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def __init__(self, user, token):

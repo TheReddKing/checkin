@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 from app.models import *
 from app.helpers.passwords import *
 from enum import Enum
@@ -6,6 +6,7 @@ from functools import wraps
 
 from flask import request
 import datetime
+
 
 class Auth:
     @staticmethod
@@ -38,14 +39,16 @@ class Auth:
             return AuthClient(AuthStatus.TOKEN_INCORRECT)
         return AuthClient(AuthStatus.SUCCESS, client)
 
+
 class AuthClient(object):
     def __init__(self, authStatus, client=None):
         self.client = client
         self.authStatus = authStatus
 
+
 class AuthStatus(Enum):
     SUCCESS = 1
     NAN_TOKEN = 2
     TOKEN_INCORRECT = 3
-    TOKEN_EXPIRED  = 4
+    TOKEN_EXPIRED = 4
     LOGIN_INCORRECT = 6

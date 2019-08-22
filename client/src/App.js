@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { HashRouter, Route, Switch, NavLink as RRNavLink } from "react-router-dom";
+import {
+  HashRouter,
+  Route,
+  Switch,
+  NavLink as RRNavLink
+} from "react-router-dom";
 import {
   Container,
   Collapse,
@@ -9,19 +14,18 @@ import {
   Nav,
   NavItem,
   NavLink
-} from 'reactstrap';
-import './App.css';
-import Dashboard from './Dashboard';
-import Database from './Database';
-import { Login, Logout } from './Login';
-import Settings from './Settings';
-import Alert from 'react-s-alert';
+} from "reactstrap";
+import "./App.css";
+import Dashboard from "./Dashboard";
+import Database from "./Database";
+import { Login, Logout } from "./Login";
+import Settings from "./Settings";
+import Alert from "react-s-alert";
 
-import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import "react-s-alert/dist/s-alert-default.css";
+import "react-s-alert/dist/s-alert-css-effects/slide.css";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -31,12 +35,12 @@ class App extends Component {
     };
   }
 
-  updateName = (name) => {
+  updateName = name => {
     this.setState({
       ...this.state,
       name: name
     });
-  }
+  };
 
   componentWillMount() {
     this.setState({
@@ -63,21 +67,25 @@ class App extends Component {
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav navbar>
                   <NavItem>
-                    <NavLink tag={RRNavLink} to="/" activeClassName="active">Event</NavLink>
+                    <NavLink tag={RRNavLink} to="/" activeClassName="active">
+                      Event
+                    </NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={RRNavLink} to="/settings">Settings</NavLink>
+                    <NavLink tag={RRNavLink} to="/settings">
+                      Settings
+                    </NavLink>
                   </NavItem>
                 </Nav>
 
                 <Nav className="ml-auto" navbar>
                   <NavItem>
-                    <NavLink>
-                      Hello {this.state.name}
-                    </NavLink>
+                    <NavLink>Hello {this.state.name}</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink tag={RRNavLink} to="/logout">Logout</NavLink>
+                    <NavLink tag={RRNavLink} to="/logout">
+                      Logout
+                    </NavLink>
                   </NavItem>
                 </Nav>
               </Collapse>
@@ -85,15 +93,25 @@ class App extends Component {
           </Navbar>
           <Switch>
             <Route path="/settings" component={Settings} />
-            <Route path="/login" render={(props) => <Login onNameChange={this.updateName} {...props}/>} />
-            <Route path="/logout" render={(props) => <Logout onNameChange={this.updateName} {...props}/>} />
+            <Route
+              path="/login"
+              render={props => (
+                <Login onNameChange={this.updateName} {...props} />
+              )}
+            />
+            <Route
+              path="/logout"
+              render={props => (
+                <Logout onNameChange={this.updateName} {...props} />
+              )}
+            />
             <Route path="/" component={Dashboard} />
           </Switch>
         </HashRouter>
-        <Alert stack={{limit: 3}} />
+        <Alert stack={{ limit: 3 }} />
       </Fragment>
     );
   }
 }
 
-export default App
+export default App;

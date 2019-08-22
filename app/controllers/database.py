@@ -1,4 +1,4 @@
-from app import db
+from app.app import db
 from app.models import *
 
 
@@ -96,7 +96,8 @@ class Database:
         if (Database.hasAdminPrivilege(client)):
             event = Event.query.get(params['id'])
             if event is not None:
-                query = db.session.query(UserEvents).filter(UserEvents.c.event_id==event.id)
+                query = db.session.query(UserEvents).filter(
+                    UserEvents.c.event_id == event.id)
                 query.delete(synchronize_session=False)
                 db.session.delete(event)
                 db.session.commit()

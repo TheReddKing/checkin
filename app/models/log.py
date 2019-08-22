@@ -1,6 +1,7 @@
-from app import db
+from app.app import db
 import datetime
 from app.helpers.passwords import *
+
 
 class Log(db.Model):
     __tablename__ = 'logs'
