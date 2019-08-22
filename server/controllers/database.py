@@ -82,10 +82,13 @@ class Database:
         if any(val not in params for val in ['name', 'time']):
             return False
         if (Database.hasAdminPrivilege(client)):
-            event = Event(name=params['name'], datestring=params['time'])
-            client.user.events.append(event)
-            db.session.add(event)
-            db.session.commit()
+            try:
+                event = Event(name=params['name'], datestring=params['time'])
+                client.user.events.append(event)
+                db.session.add(event)
+                db.session.commit()
+            except:
+                return False
             return True
         return False
 
@@ -123,6 +126,14 @@ class Database:
             return False
         action = actionDict['action']
         event_id = actionDict['event_id']
+        if (action == "ADDALL"):
+            event = Database.getEvent(client, event_id)
+            if (event is None or 'attendees' not in actionDict):
+                return False
+            atts = actionDict['attendees']
+            for a in atts:
+                Database_Event.createAttendee(event, a)
+            return True
         if (action == "ADD"):
             event = Database.getEvent(client, event_id)
             if (event is None):
@@ -151,7 +162,6 @@ class Database_Event(object):
         if any(val not in actionDict for val in ['name', 'scan_value', 'email', 'school', 'tags', 'checkin_status']):
             return False
         if (Attendee.query.filter_by(scan_value=actionDict['scan_value'], event_id=event.id).first() is not None):
-            print("no duplicate users allowed")
             return True
         attendee = Attendee(
             event,

@@ -52,7 +52,10 @@ class AdminEvent extends Component {
   };
   uploadQuillUsers = () => {
     Database.event_addAttendees(this.state.add_potentialUsers);
-    alert("uploading users... do not refresh for like 20 seconds");
+    Alert.error(
+      "uploading users... do not refresh for like 20 seconds",
+      ALERT_SETTINGS
+    );
   };
 
   handleFileRead = e => {

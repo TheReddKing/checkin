@@ -130,14 +130,10 @@ class Database {
     return new Promise((resolve, reject) => {
       fetch(Constants.API_Location + request.url, form)
         .then(results => {
-          try {
-            if (!results.ok) {
-              throw results;
-            }
-            return results.json();
-          } catch (err) {
-            reject(Constants.API_ERROR_TIMEOUT);
+          if (!results.ok) {
+            throw results;
           }
+          return results.json();
         })
         .then(data => {
           try {
@@ -150,8 +146,11 @@ class Database {
           } catch (err) {
             reject("json doesn't include status");
           }
+        })
+        .catch(data => {
+          reject(data);
         });
-      setTimeout(reject, 2000, Constants.API_ERROR_TIMEOUT);
+      setTimeout(reject, 25000, Constants.API_ERROR_TIMEOUT);
     });
   }
 
@@ -346,19 +345,17 @@ class Database {
     return output;
   }
   event_addAttendees(listOfAttendees) {
-    for (var v = 0; v < listOfAttendees.length; v += 1) {
-      var attendee = listOfAttendees[v];
-      var attendeeJSON = JSON.parse(JSON.stringify(attendee));
-      attendeeJSON["action"] = "ADD";
-      attendeeJSON["event_id"] = state.currentEvent.id;
-      this.apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON)
-        .then(data => {
-          console.log("SUCCESS");
-        })
-        .catch(data => {
-          this.save_apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON);
-        });
-    }
+    var attendeeJSON = {};
+    attendeeJSON["action"] = "ADDALL";
+    attendeeJSON["event_id"] = state.currentEvent.id;
+    attendeeJSON["attendees"] = listOfAttendees;
+    this.apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON)
+      .then((data, reject) => {
+        alert("SUCCESS");
+      })
+      .catch((data, reject) => {
+        this.save_apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON);
+      });
   }
   event_updateAttendee(attendeeJSON) {
     console.log("UPDATING USER");
@@ -403,6 +400,8 @@ class Database {
           console.log("SUCCESS");
         })
         .catch(data => {
+          console.log(data);
+          console.log("SAD");
           this.save_apiCall(action, params);
         });
     }
