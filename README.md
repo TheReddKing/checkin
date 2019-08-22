@@ -46,5 +46,6 @@ You're all set! Now it's time to use the online interface!
 # Other Documents
 
 AWSEC2_SERVERSETUP.md - Setting up on an EC2 Instance on AWS
+HEROKU_SETUP.md - Setting up on heroku instance
 
 Created by: TheReddKing
