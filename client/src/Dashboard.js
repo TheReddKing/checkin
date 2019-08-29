@@ -138,7 +138,7 @@ class Dashboard extends Component {
       record.setText("SCHOOL", attendee.school);
     }
     if (attendee.checkin_status) {
-      record.setText("QR", attendee.checkin_status);
+      record.setText("QR", attendee.scan_value);
     }
     window.dymo.label.framework.printLabel(
       this.state.printerName,
