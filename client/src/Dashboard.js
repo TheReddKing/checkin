@@ -232,7 +232,7 @@ class Dashboard extends Component {
     }
   };
   updateApplyFunction = state => {
-    this.setState(state, () => {
+    this.setState({...this.state, ...state}, () => {
       this.updateApplyDisabled();
     });
   };
