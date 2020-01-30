@@ -126,7 +126,15 @@ class Database:
             return False
         action = actionDict['action']
         event_id = actionDict['event_id']
-        if (action == "ADDALL"):
+        if (action == "UPDATEALL"):
+            event = Database.getEvent(client, event_id)
+            if (event is None or 'attendees' not in actionDict):
+                return False
+            atts = actionDict['attendees']
+            for a in atts:
+                Database_Event.updateAttendee(event, a)
+            return True
+        elif (action == "ADDALL"):
             event = Database.getEvent(client, event_id)
             if (event is None or 'attendees' not in actionDict):
                 return False
@@ -157,6 +165,22 @@ class Database:
 
 
 class Database_Event(object):
+    @staticmethod
+    def updateAttendee(event, actionDict):
+        if any(val not in actionDict for val in ['email']):
+            return False
+        attendee = Attendee.query.filter_by(email=actionDict['email'], event_id=event.id).first()
+        if (attendee is None):
+            return True
+        if "tags" in actionDict:
+            tags = actionDict["tags"].split(";")
+            for t in tags:
+                if t == "":
+                    continue
+                Database_Attendee.updateAttendee("ACTION", t)
+        db.session.commit()
+        return True
+        
     @staticmethod
     def createAttendee(event, actionDict):
         if any(val not in actionDict for val in ['name', 'scan_value', 'email', 'school', 'tags', 'checkin_status']):

@@ -58,6 +58,15 @@ class AdminEvent extends Component {
     );
   };
 
+  updateQuillUsers = () => {
+    Database.event_updateAttendees(this.state.add_potentialUsers);
+    Alert.error(
+      "updating users... do not refresh for like 20 seconds",
+      ALERT_SETTINGS
+    );
+  };
+
+
   handleFileRead = e => {
     const content = this.fileReader.result.split("\n");
     var allAttendees = [];
@@ -169,6 +178,7 @@ class AdminEvent extends Component {
         />
         <p> Total number of users: {this.state.add_potentialUsers.length} </p>
         <Button onClick={this.uploadQuillUsers}>Add All Users</Button>
+        <Button onClick={this.updateQuillUsers}>Update All Tags</Button>
       </Container>
     );
   }

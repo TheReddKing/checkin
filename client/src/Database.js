@@ -344,6 +344,19 @@ class Database {
     }
     return output;
   }
+  event_updateAttendees(listOfAttendees) {
+    var attendeeJSON = {};
+    attendeeJSON["action"] = "UPDATEALL";
+    attendeeJSON["event_id"] = state.currentEvent.id;
+    attendeeJSON["attendees"] = listOfAttendees;
+    this.apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON)
+      .then((data, reject) => {
+        alert("SUCCESS");
+      })
+      .catch((data, reject) => {
+        this.save_apiCall(APICALLS.ATTENDEE_ACTION, attendeeJSON);
+      });
+  }
   event_addAttendees(listOfAttendees) {
     var attendeeJSON = {};
     attendeeJSON["action"] = "ADDALL";
